@@ -32,7 +32,7 @@ class overload
             }
         }
 
-        return gettype($param);
+        return $type;
     }
 
     public function getById(int $id): array
