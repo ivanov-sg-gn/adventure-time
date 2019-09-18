@@ -22,17 +22,17 @@ stream_context_set_option($stream_context, 'ssl', 'local_pk', '/var/www/ssl/cert
 stream_context_set_option($stream_context, 'ssl', 'allow_self_signed', true);
 stream_context_set_option($stream_context, 'ssl', 'verify_peer', false);
 
-$webSocketServer = stream_socket_server('ssl://0.0.0.0:33377', $errno, $errstr, STREAM_SERVER_BIND | STREAM_SERVER_LISTEN, $stream_context);
+$socketServer = stream_socket_server('ssl://0.0.0.0:33377', $errno, $errstr, STREAM_SERVER_BIND | STREAM_SERVER_LISTEN, $stream_context);
 
 # Check status
-if (!$webSocketServer) {
+if (!$socketServer) {
     print_r([
         'errno' => $errno,
         'errstr' => $errstr
     ]);
-    die("\nWebsocket failure\n");
+    die("\nsocket failure\n");
 } else {
-    echo "Websocket started\n";
+    echo "socket started\n";
 }
 
 # Array connections ( yes, there may be several (= )
@@ -42,7 +42,7 @@ while (true) {
     $read = $connections;
 
     # Add new connections
-    $read[] = $webSocketServer;
+    $read[] = $socketServer;
 
 
     $write = $except = null;
@@ -50,17 +50,17 @@ while (true) {
     if (!stream_select($read, $write, $except, null))
         break;
 
-    # Handshake with $webSocketServer
-    if (in_array($webSocketServer, $read)) {
+    # Handshake with Web
+    if (in_array($socketServer, $read)) {
         # Accept new connections
-        if (($connection = stream_socket_accept($webSocketServer, -1)) && ($info = websocket::handshake($connection))) {
+        if (($connection = stream_socket_accept($socketServer, -1)) && ($info = mysocket::handshake($connection))) {
             # Add to the list of processed
             $connections[] = $connection;
 
-            websocket::send($webSocketServer, 'Hello man =)');
+            mysocket::send($socketServer, 'Hello man =)');
         }
 
-        unset($read[array_search($webSocketServer, $read)]);
+        unset($read[array_search($socketServer, $read)]);
     }
 
     # Process each connection ( because php is not asynchronous (= )
@@ -74,8 +74,8 @@ while (true) {
         }
 
         # Get messages
-        $data = websocket::decode($data);
-        if(empty($data['payload'])){
+        $data = mysocket::decode($data);
+        if (empty($data['payload'])) {
             continue;
         }
         $data = json_decode($data['payload'], 1);
@@ -83,7 +83,7 @@ while (true) {
         # Check keep alive status from web socket
         if ($data["method"] != "keep_alive") continue;
 
-        
+
         if (is_array($data)) {
             // code ...
         }
@@ -91,13 +91,13 @@ while (true) {
 }
 
 
-class websocket
+class mysocket
 {
     static function send($connection, string $messages = ''): array
     {
         if (!is_resource($connection)) return false;
 
-        $messages = websocket::encode(json_encode($messages));
+        $messages = mysocket::encode(json_encode($messages));
 
         return fwrite($connection, $messages) === false;
     }
@@ -299,4 +299,3 @@ class websocket
         return $info;
     }
 }
-
