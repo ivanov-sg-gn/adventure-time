@@ -1,6 +1,5 @@
 <?php
 
-
 class overload{
 	public function get(){
 		if(func_num_args() != 1){
@@ -48,4 +47,7 @@ class overload{
 }
 
 $overload = new overload;
-$overload->get(123);
+
+$overload->get(123); // run getById
+
+$overload->get([]); // run getByFilter
