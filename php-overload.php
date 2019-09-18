@@ -3,7 +3,7 @@
 class overload{
 	public function get(){
 		if(func_num_args() != 1){
-			throw new Exception('Ожидается 1 параметр');
+			throw new Exception('Method expects 1 parameter');
 		}
 		
 		$arg = func_get_arg(0);
