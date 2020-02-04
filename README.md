@@ -2,7 +2,7 @@
 
 #### Что-то действительно нужное
 * <a href="php-tcp-sokcet-server.php">Tcp socket server | php</a>
-* <a href="golang-parser">Парсинг ссылок с точки входа и получение картинок с страниц | golang</a>
+* <a href="golang-parser">Парсинг всех ссылок с точки входа и получение картинок с страниц | golang</a>
 
 #### Извращения
 * <a href="php-overload.php">Первая ненужная штука | php</a>
