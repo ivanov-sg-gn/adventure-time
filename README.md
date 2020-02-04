@@ -1,4 +1,4 @@
-# Время приключений в php и sql
+# Время приключений (php, sql, go)
 
 #### Что-то действительно нужное
 * <a href="php-tcp-sokcet-server.php">Tcp socket server на php</a>
