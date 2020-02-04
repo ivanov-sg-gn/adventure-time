@@ -1,0 +1,175 @@
+<html>
+<head>
+    <script type="text/javascript" src="/local/templates/.default/assets/scripts/libraries/jquery-3.3.1.js"></script>
+</head>
+<body>
+<section>
+    <div class="tabs">
+        <div class="tabs__item" data-width="100">100%</div>
+        <div class="tabs__item" data-width="50">50%</div>
+        <div class="tabs__item" data-width="33.33">33.33%</div>
+        <div class="tabs__item" data-width="25">25%</div>
+    </div>
+</section>
+
+<section>
+    <div class="list js_list">
+        <div class="list__item">
+            <div class="list__item-content js_item"></div>
+        </div>
+        <div class="list__item">
+            <div class="list__item-content js_item"></div>
+        </div>
+        <div class="list__item">
+            <div class="list__item-content js_item"></div>
+        </div>
+        <div class="list__item">
+            <div class="list__item-content js_item"></div>
+        </div>
+        <div class="list__item">
+            <div class="list__item-content js_item"></div>
+        </div>
+        <div class="list__item">
+            <div class="list__item-content js_item"></div>
+        </div>
+        <div class="list__item">
+            <div class="list__item-content js_item"></div>
+        </div>
+        <div class="list__item">
+            <div class="list__item-content js_item"></div>
+        </div>
+        <div class="list__item">
+            <div class="list__item-content js_item"></div>
+        </div>
+    </div>
+</section>
+
+
+<style>
+    .tabs {
+        margin: 10px 0;
+    }
+
+    .tabs__item {
+        display: inline-block;
+        margin: 0 10px;
+    }
+
+    .tabs__item {
+        border-bottom: 1px solid transparent;
+    }
+
+    .tabs__item:hover {
+        cursor: pointer;
+        border-bottom: 1px solid #333;
+    }
+
+
+    .list {
+        font-size: 0;
+        width: 600px;
+    }
+
+    .list__item {
+        font-size: initial;
+        display: inline-block;
+        width: 33.33%;
+        padding: 10px;
+        box-sizing: border-box;
+    }
+
+    .list__item-content {
+        border: 1px solid #999;
+        width: 100%;
+        height: 100px;
+        box-sizing: border-box;
+    }
+
+    .list__item-content:hover {
+        cursor: pointer;
+        border-bottom: 1px solid #000;
+    }
+
+    .list__item-block {
+        font-size: initial;
+        height: 1px;
+        margin: 0 10px;
+        padding: 0 10px;
+        border: 1px solid #333;
+        box-sizing: border-box;
+    }
+
+</style>
+
+
+<script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+
+        $('.tabs__item').on('click', function () {
+            let width = $(this).data('width');
+
+            $('.js_ajax_block').stop().animate({'height': 0}, 300, function () {
+                $(this).remove()
+            });
+
+            $('.list__item').css('width', width + '%');
+        });
+
+
+        $('.js_item').on('click', function () {
+            deactivateOther();
+
+            var $this = $(this);
+
+            $('.js_ajax_block').stop().animate({'height': 0}, 300, function () {
+                $(this).remove();
+            });
+
+            if (!$(this).hasClass('active')) {
+                let lastItem = calculationLastItem($this);
+
+                // AJAX
+                let block = $(`
+					<div class='list__item-block js_ajax_block'>
+						I m block! Just a block
+					</div>
+				`);
+
+                lastItem.closest('.list__item').after(block);
+
+                let height = block.css('height', 'auto').height();
+                block.height(0);
+
+
+                block.stop().animate({'height': height}, 400);
+
+                $(this).addClass('active');
+            } else {
+                $this.removeClass('active');
+            }
+        });
+    });
+
+    // Деактивация активных
+    function deactivateOther() {
+        $('.js_list').find('.js_item.active').removeClass('active');
+    }
+
+
+    // нахождение последнего элемента в строке
+    function calculationLastItem($obj) {
+        let count = Math.floor($('.js_list').outerWidth() / $obj.outerWidth());
+        let index = $('.js_list .js_item').index($obj) + 1;
+
+        let eqq = (Math.ceil(index / count) * count) - 1;
+
+        eqq = eqq >= $('.js_list .js_item').length ? $('.js_list .js_item').length - 1 : eqq;
+
+        return $('.js_list .js_item').eq(eqq);
+    }
+
+</script>
+
+</body>
+</html>
