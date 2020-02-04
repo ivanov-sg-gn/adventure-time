@@ -9,3 +9,4 @@
 * <a href="php-overload.php">Первая ненужная штука | php</a>
 * <a href="json_sql.sql">Работа с ассоциативным json масивом | sql</a>
 * <a href="additional_functions.php">Функции, которые всё ещё использую | php</a>
+* <a href="scalable_blocks.html">Прикольный (нет) ресайз блоков под разные размеры | html</a>
