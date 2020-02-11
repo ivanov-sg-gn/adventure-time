@@ -5,7 +5,7 @@ go run parser https://ivanov-host.ru/
 # DB
 ./connectionDB/connectionDB.go
 	dbLogin = "golang"
-	dbPassword = "%54321GoLang12345%"
+	dbPassword = "password"
 	dbName = "golang"
 	
 	
