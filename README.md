@@ -4,6 +4,9 @@
 * <a href="../../../symfony">Небольшой магазинчик для освоения (мой "Hello World!"). Symfony 4.4.2 | php</a>
   - ```Над чистотой кода не заморачивался, чтобы не упустить главное =)```
 
+### Всякое на Laravel
+* <a href="../../../laravel">Небольшой магазинчик для освоения (мой "Hello World!"). laravel | php</a>
+
 ### Всякое интересное и не очень
 * <a href="php-tcp-sokcet-server.php">Tcp socket server | php</a>
 * <a href="bitrix-d7-story">Повесть о том как на d7 (bitrix) работал с кэшем и пользователями | php</a>
